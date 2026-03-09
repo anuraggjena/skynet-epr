@@ -7,9 +7,9 @@ export type Session = {
 }
 
 const USERS: Session[] = [
-  { id: "0b522b79-26fe-4a17-9103-bfe35b71751b", role: "admin", name: "System Admin" },
-  { id: "df0c64fe-60be-4ed1-9ffa-c5ce7b628995", role: "instructor", name: "David Reynolds" },
-  { id: "f5c08268-cda8-42a9-a2ae-af7c5e19c62e", role: "student", name: "Sneha Iyer" }
+  { id: "5bc3a4d1-f1d5-4bba-a67b-6c678aea7468", role: "admin", name: "System Admin" },
+  { id: "77d0e81e-c412-47d3-99f5-d65c033237c7", role: "instructor", name: "David Reynolds" },
+  { id: "98669d27-7263-45c0-a218-63f3d908930f", role: "student", name: "Sneha Iyer" }
 ]
 
 export function getUsers() {
