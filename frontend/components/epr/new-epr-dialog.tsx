@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Sparkles, Loader2, Save, Calendar, User } from "lucide-react"
+import { Sparkles, Loader2, Save, Calendar, User, FileText, X } from "lucide-react"
 
 type Props = {
   open: boolean
@@ -40,10 +40,8 @@ export default function NewEprDialog({
   const [overall, setOverall] = useState<number | string>(4)
   const [technical, setTechnical] = useState<number | string>(4)
   const [nonTechnical, setNonTechnical] = useState<number | string>(4)
-
   const [periodStart, setPeriodStart] = useState("")
   const [periodEnd, setPeriodEnd] = useState("")
-
   const [remarks, setRemarks] = useState("")
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -62,7 +60,6 @@ export default function NewEprDialog({
       setRemarks(res.suggestedRemarks)
     } catch (error) {
       console.error("AI generation failed", error)
-      alert("Failed to generate AI remarks")
     } finally {
       setLoading(false)
     }
@@ -91,9 +88,6 @@ export default function NewEprDialog({
       })
       await onCreated()
       onClose()
-    } catch (error) {
-      console.error("EPR creation failed", error)
-      alert("Failed to create EPR")
     } finally {
       setSaving(false)
     }
@@ -101,120 +95,101 @@ export default function NewEprDialog({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-137.5 overflow-hidden p-0">
+      <DialogContent className="sm:max-w-4xl max-h-[85vh] flex flex-col p-0 overflow-hidden bg-background">
         
-        <DialogHeader className="p-6 pb-4 border-b bg-muted/20">
-          <DialogTitle className="text-xl">Create Evaluation</DialogTitle>
-          <DialogDescription>
-            Submit a new performance report for <span className="font-semibold text-foreground">{personName}</span>.
-          </DialogDescription>
+        <DialogHeader className="p-6 pb-4 border-b bg-muted/10">
+          <div className="space-y-1">
+            <DialogTitle className="text-xl">Create Evaluation</DialogTitle>
+            <DialogDescription>
+              Submit a new performance report for <span className="font-semibold text-foreground">{personName}</span>.
+            </DialogDescription>
+          </div>
         </DialogHeader>
 
-        <div className="p-6 space-y-6">
-          
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-              <Calendar className="w-4 h-4 text-muted-foreground" /> Evaluation Period
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="periodStart" className="text-xs text-muted-foreground">Start Date</Label>
-                <Input
-                  id="periodStart"
-                  type="date"
-                  value={periodStart}
-                  onChange={(e) => setPeriodStart(e.target.value)}
-                  className="w-full"
-                />
+        <div className="flex-1 overflow-y-auto">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
+            
+            <div className="md:col-span-4 p-6 border-r border-border/50 bg-muted/5 space-y-8">
+              
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <Calendar className="w-3.5 h-3.5" /> Period
+                </div>
+                <div className="grid gap-4">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="periodStart" className="text-xs">Start Date</Label>
+                    <Input id="periodStart" type="date" value={periodStart} onChange={(e) => setPeriodStart(e.target.value)} />
+                  </div>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="periodEnd" className="text-xs">End Date</Label>
+                    <Input id="periodEnd" type="date" value={periodEnd} onChange={(e) => setPeriodEnd(e.target.value)} />
+                  </div>
+                </div>
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="periodEnd" className="text-xs text-muted-foreground">End Date</Label>
-                <Input
-                  id="periodEnd"
-                  type="date"
-                  value={periodEnd}
-                  onChange={(e) => setPeriodEnd(e.target.value)}
-                  className="w-full"
-                />
-              </div>
-            </div>
-          </div>
 
-          <div className="space-y-3 pt-2">
-            <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-              <User className="w-4 h-4 text-muted-foreground" /> Performance Metrics
-            </div>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="overall" className="text-xs font-bold text-primary uppercase">Overall</Label>
-                <Input
-                  id="overall"
-                  type="number"
-                  min={1} max={5} step={0.1}
-                  value={overall}
-                  onChange={(e) => setOverall(e.target.value)}
-                  className="font-semibold text-lg"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="technical" className="text-xs text-muted-foreground uppercase">Technical</Label>
-                <Input
-                  id="technical"
-                  type="number"
-                  min={1} max={5} step={0.1}
-                  value={technical}
-                  onChange={(e) => setTechnical(e.target.value)}
-                />
-              </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="nonTechnical" className="text-xs text-muted-foreground uppercase">Non-Technical</Label>
-                <Input
-                  id="nonTechnical"
-                  type="number"
-                  min={1} max={5} step={0.1}
-                  value={nonTechnical}
-                  onChange={(e) => setNonTechnical(e.target.value)}
-                />
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-[11px] font-bold text-muted-foreground uppercase tracking-wider">
+                  <User className="w-3.5 h-3.5" /> Performance
+                </div>
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="overall" className="text-xs font-bold text-primary">Overall Rating</Label>
+                    <Input id="overall" type="number" min={1} max={5} step={0.1} value={overall} onChange={(e) => setOverall(e.target.value)} className="font-bold text-lg" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="technical" className="text-[10px] uppercase font-bold text-muted-foreground">Technical</Label>
+                      <Input id="technical" type="number" min={1} max={5} step={0.1} value={technical} onChange={(e) => setTechnical(e.target.value)} />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="nonTechnical" className="text-[10px] uppercase font-bold text-muted-foreground">Soft Skills</Label>
+                      <Input id="nonTechnical" type="number" min={1} max={5} step={0.1} value={nonTechnical} onChange={(e) => setNonTechnical(e.target.value)} />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="space-y-3 pt-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="remarks" className="text-sm font-semibold">Instructor Remarks</Label>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="h-8 text-xs bg-indigo-50 text-indigo-700 border-indigo-200 hover:bg-indigo-100 hover:text-indigo-800 dark:bg-indigo-950/30 dark:text-indigo-300 dark:border-indigo-800 dark:hover:bg-indigo-900/50 transition-colors"
-                onClick={handleGenerateRemarks}
-                disabled={loading}
-              >
-                {loading ? (
-                  <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
-                ) : (
-                  <Sparkles className="w-3.5 h-3.5 mr-1.5" />
-                )}
-                Auto-Generate
-              </Button>
+            <div className="md:col-span-8 p-6 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm font-semibold">
+                  <FileText className="w-4 h-4 text-muted-foreground" /> Instructor Remarks
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="h-8 text-[11px] font-bold uppercase tracking-wider bg-primary/5 border-primary/20 text-primary hover:bg-primary/10 transition-all shadow-sm"
+                  onClick={handleGenerateRemarks}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <Loader2 className="w-3 h-3 mr-2 animate-spin" />
+                  ) : (
+                    <Sparkles className="w-3 h-3 mr-2 text-primary" />
+                  )}
+                  Auto-Generate with AI
+                </Button>
+              </div>
+              
+              <Textarea
+                id="remarks"
+                placeholder="The AI will generate detailed feedback based on the scores provided, or you can type your own..."
+                className="min-h-100 md:min-h-0 md:h-[calc(85vh-250px)] resize-none p-4 text-sm leading-relaxed"
+                value={remarks}
+                onChange={(e) => setRemarks(e.target.value)}
+              />
             </div>
-            <Textarea
-              id="remarks"
-              placeholder="Provide specific feedback, or use the auto-generate button based on the scores above..."
-              className="min-h-30 resize-none"
-              value={remarks}
-              onChange={(e) => setRemarks(e.target.value)}
-            />
-          </div>
 
+          </div>
         </div>
 
-        <DialogFooter className="p-8 border-t bg-muted/10">
+        <DialogFooter className="p-4 border-t bg-muted/5">
           <div className="flex items-center justify-end gap-2 w-full">
             <Button variant="ghost" onClick={onClose} disabled={saving || loading}>
               Cancel
             </Button>
-            <Button onClick={handleSave} disabled={saving || loading}>
+            <Button onClick={handleSave} disabled={saving || loading} className="min-w-30">
               {saving ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
