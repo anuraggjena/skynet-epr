@@ -246,9 +246,9 @@ project-root
 ├── frontend
 │   ├── app
 │   ├── components
-│   ├── analytics
-│   ├── epr
-│   ├── dashboard
+│   │    ├── analytics
+│   │    ├── epr
+│   │    ├── dashboard
 │   └── lib
 │
 └── README.md
