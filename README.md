@@ -249,7 +249,10 @@ project-root
 │   │    ├── analytics
 │   │    ├── epr
 │   │    ├── dashboard
+│   │    ├── people
+│   │
 │   └── lib
+│
 │
 └── README.md
 
@@ -403,7 +406,7 @@ AI assisted with:
     
 -   Helping debug certain implementation and debug issues
     
-However, all ** core ideas, integration logic, feature planning, database interactions, and final implementation decisions were tested and reviewed manually by me** to ensure correctness and alignment with the intended system design.
+However, all **core ideas, integration logic, feature planning, database interactions, and final implementation decisions were tested and reviewed manually by me** to ensure correctness and alignment with the intended system design.
 
 
 
