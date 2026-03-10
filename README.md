@@ -1,4 +1,4 @@
-# AI-Powered EPR Evaluation System
+# Skynet-EPR Evaluation System
 
 A full-stack evaluation management platform for aviation training programs.  
 The system enables **administrators and instructors to manage trainee evaluations (EPRs - Electronic Progress & Performance Records)** while providing **performance analytics, AI-assisted feedback generation, and role-based dashboards**.
